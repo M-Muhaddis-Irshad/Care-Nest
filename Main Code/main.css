@@ -1,0 +1,61 @@
+/* NavBar start's___________________________________________________ */
+
+.navBar {
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+    backdrop-filter: blur(10px);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 70px;
+    height: 70px;
+}
+
+.logoHeading {
+    color: dodgerblue;
+}
+
+.navLinks {
+    font-weight: 500;
+    font-size: 18px;
+    display: flex;
+    gap: 20px;
+}
+
+.navLinks a {
+    color: rgb(94, 175, 255);
+    text-decoration: none;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.navLinks a:hover {
+    color: rgb(0, 128, 255);
+} 
+
+.navLinks a::before {
+    content: "";
+    position: absolute;
+    border-bottom: 1px solid dodgerblue;
+    width: 100%;
+    transform: scaleX(0);
+    bottom: -2px;
+    transform-origin: right;
+    transition: transform 0.2s ease, transform-origin 0s;
+}
+
+.navLinks a:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* NavBar start's___________________________________________________ */
