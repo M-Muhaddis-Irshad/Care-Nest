@@ -1,99 +1,54 @@
-/* Hero Section Start's__________________________________________________________ */
+/* Cards Section Start's____________________________________________ */
 
-.hero_section {
-    position: relative;
-    height: 300px;
-    overflow: hidden;
+
+.cardsContainer {
+    width: 100%;
+    padding: 20px 40px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
-.bg_video {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    /* height: 400px; */
-    object-fit: cover;
-    z-index: -2;
+.card1 {
+    background-color: #3eb8d7;
 }
 
-.video_overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 400px;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: -1;
+
+.card2 {
+    background-color: #0392ce;
 }
 
-.hero_content {
-    color: #fff;
-    text-align: center;
-    animation: fadeInUp 1.5s ease forwards;
-    opacity: 0;
-    transform: translateY(20px);
+
+.card3 {
+    background-color: #3065b5;
 }
 
-.hero_content h1 {
-    font-size: 44.8px;
-    margin-bottom: 16px;
-    font-weight: 700;
-}
 
-.hero_content span {
-    color: #00bfff;
-}
-
-.hero_content p {
-    font-size: 16.6px;
-    opacity: 0.9;
-    margin-bottom: 32px;
-}
-
-/* Button */
-
-.hero_sect_btn a {
-    text-decoration: none;
+.cards {
     color: white;
-    transition: 0.5s;
+    width: 325px;
+    height: 310px;
+    padding: 30px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
 }
 
-.hero_sect_btn:hover a {
-    color: dodgerblue;
+.cards span {
+    font-size: 14px;
 }
 
-.hero_sect_btn {
-    font-weight: 600;
+.cards button {
     color: white;
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 10px 20px;
-    border: 1px solid dodgerblue;
-    border-radius: 8px;
-    backdrop-filter: blur(5px);
-    transition: all 0.5s;
+    background-color: transparent;
+    border: 1px solid cyan;
+    padding: 10px 15px;
+    cursor: not-allowed !important;
 }
 
-.hero_sect_btn:hover {
-    color: dodgerblue;
-    background-color: white;
-    border-color: transparent;
-    transform: scale(1.1);
-}
+/* .timingsContainer div {} */
 
+/* .actlTimings {} */
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Hero Section End's__________________________________________________________ */
+/* Cards Section End's____________________________________________ */
