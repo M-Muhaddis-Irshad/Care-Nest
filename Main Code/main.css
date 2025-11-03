@@ -76,17 +76,17 @@ body.active {
 
 .bar {
     display: block;
-    /* padding: 2px 20px; */
     width: 40px;
     height: 4px;
-    /* background-color: rgb(0, 83, 166); */
-    background-color: dodgerblue;
+    /* background-color: rgb(0, 95, 190); */
+    background: linear-gradient(to right, deepskyblue, rgb(0, 95, 190));
     border-radius: 5px;
     transition: all 0.2s ease-in-out;
 }
 
 .bar.active {
     background-color: rgb(123, 0, 0);
+    background: linear-gradient(to right, rgb(170, 0, 0), rgb(87, 0, 0));
 }
 
 
@@ -108,7 +108,7 @@ body.active {
     font-weight: 500;
     font-size: 18px;
     position: relative;
-    transition: all 0.2s;
+    transition: all 0.3s;
 }
 
 .navLinks:hover {
@@ -144,8 +144,9 @@ body.active {
 .portal {
     width: 22px;
     height: 22px;
-    fill: rgb(24, 112, 141);
-    transition: 0.2s;
+    fill: rgb(0, 139, 185);
+    /* fill: rgb(0, 104, 207); */
+    transition: 0.3s;
 }
 
 .navLinks:hover .portal {
@@ -178,20 +179,20 @@ body.active {
 footer {
     color: white;
     width: 100%;
-    padding: 40px 64px 64px 64px;
-    padding-bottom: 28px;
+    padding: 40px 40px 28px 40px;
     background-color: dodgerblue;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     text-align: center;
     gap: 5px;
 }
 
-footer .div1 {
+.footerContent {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly !important;
     align-items: baseline;
     flex-wrap: wrap;
     text-align: left;
@@ -211,13 +212,14 @@ footer .div1 {
 
 .logoMsg,
 .quickLinks,
-.connectUs {
+.connectUs,
+.followUs {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     flex-wrap: wrap;
-    width: 185px;
+    width: 165px;
     gap: 8px;
 }
 
@@ -242,6 +244,10 @@ ul {
     padding-left: 0 !important;
 }
 
+.connectUs span {
+    font-size: 14px;
+}
+
 .mediaLinks {
     display: flex;
     justify-content: space-evenly;
@@ -256,7 +262,7 @@ ul {
 
 .mediaLinks li a i:hover {
     color: rgb(101, 216, 255);
-    transform: scale(1.1);
+    transform: translateY(-2px);
 }
 
 
@@ -336,7 +342,7 @@ ul {
 
 /* Media Queries Start's_________________________________________ */
 
-@media screen and (max-width: 807px) {
+@media screen and (max-width: 815px) {
 
     .navBar {
         padding: 0px 28px;
@@ -432,6 +438,54 @@ ul {
 
     .navbarToggler.active .bar3 {
         transform: translateY(-9.5px) rotate(-45deg);
+    }
+
+}
+
+
+@media screen and (max-width: 800px) {
+
+    .footerH6 {
+        font-size: 18px;
+    }
+
+    .footerContent {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly !important;
+        gap: 50px;
+    }
+
+
+    .logoMsg,
+    .quickLinks,
+    .connectUs,
+    .followUs {
+        font-size: 14px !important;
+    }
+
+}
+
+@media screen and (max-width: 605px) {
+
+    .footerH6 {
+        font-size: 20px;
+    }
+
+    .footerContent {
+        flex-direction: column;
+    }
+
+    .logoMsg,
+    .quickLinks,
+    .connectUs,
+    .followUs {
+        width: 185px;
+        font-size: 16px !important;
+    }
+
+    .connectUs span {
+        font-size: 16px;
     }
 
 }
