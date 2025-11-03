@@ -145,7 +145,6 @@ body.active {
     width: 22px;
     height: 22px;
     fill: rgb(0, 139, 185);
-    /* fill: rgb(0, 104, 207); */
     transition: 0.3s;
 }
 
@@ -294,7 +293,7 @@ body.active {
 main {
     width: 100%;
     background-color: whitesmoke;
-    padding: 50px;
+    padding: 20px 40px;
 }
 
 
