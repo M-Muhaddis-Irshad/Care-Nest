@@ -28,6 +28,9 @@ const logOutUser = async () => {
     }
 }
 
+
+
+
 const loginBtn = document.getElementById('loginBtn');
 
 // Initially check that User is loggedin or not_____________________________
@@ -40,15 +43,15 @@ const isUserLoggedIn = async () => {
     }
 
     if (session === null) {
-        Swal.fire({
-            title: "User isn't log in",
-            icon: "error",
-            showConfirmButton: false,
-            timer: 1000
-        });
-        setTimeout(() => {
-            window.location.href = 'allPages/auth/login/login.html';
-        }, 1000);
+        // Swal.fire({
+        //     title: "User isn't log in",
+        //     icon: "error",
+        //     showConfirmButton: false,
+        //     timer: 1000
+        // });
+        // setTimeout(() => {
+        //     window.location.href = 'allPages/auth/login/login.html';
+        // }, 1000);
         localStorage.removeItem('userEmail');
         localStorage.removeItem('userName');
         return
@@ -65,7 +68,6 @@ const isUserLoggedIn = async () => {
 }
 
 isUserLoggedIn()
-
 
 {// Svg's Section__________________
 
