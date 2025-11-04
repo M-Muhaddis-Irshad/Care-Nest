@@ -66,19 +66,33 @@ const isUserLoggedIn = async () => {
 
 isUserLoggedIn()
 
+// Auth End's'___________________________________________________
+
+
+
+
+{// Stop the default behavior of <form>____________________________________
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        appoint()
+    })
+}
+
+
 // Set Inputs value dynamically_____________________________________________
 const usrName = document.getElementById('name').value = userName;
 const email = document.getElementById('email');
 email.value = userEmail;
-
 email.disabled = true
 
 
+// Get Values
+const doctor = document.getElementById('doctor');
 
 
 // Get Doctor________________________________________________
-const checkDoc = () => {
-    const doctor = document.getElementById('doctor');
-    
+const appoint = () => {
+
     console.log(doctor.value);
 }
