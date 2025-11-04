@@ -27,7 +27,7 @@
 
     // Portal Svg____________________________________________________
 
-    fetch("../Logo_Icons/icons/Portal.svg")
+    fetch("../../../Logo_Icons/icons/Portal.svg")
         .then(res => res.text())
         .then(data => {
             document.querySelector(".portal").innerHTML = data;
