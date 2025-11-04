@@ -28,9 +28,6 @@ const logOutUser = async () => {
     }
 }
 
-
-
-
 const loginBtn = document.getElementById('loginBtn');
 
 // Initially check that User is loggedin or not_____________________________
@@ -68,3 +65,20 @@ const isUserLoggedIn = async () => {
 }
 
 isUserLoggedIn()
+
+// Set Inputs value dynamically_____________________________________________
+const usrName = document.getElementById('name').value = userName;
+const email = document.getElementById('email');
+email.value = userEmail;
+
+email.disabled = true
+
+
+
+
+// Get Doctor________________________________________________
+const checkDoc = () => {
+    const doctor = document.getElementById('doctor');
+    
+    console.log(doctor.value);
+}

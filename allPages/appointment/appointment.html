@@ -88,10 +88,49 @@
 
     <main>
 
-        <section class="about">
-            <h3>About CareNest</h3>
-            CareNest Hospital provides trusted and compassionate care, using modern technology and a skilled
-            multidisciplinary team. We focus on patient safety, quality outcomes, and a seamless experience.
+        <section class="booking-section">
+            <div class="form-container">
+
+                <h2>Book Your Appointment</h2>
+
+                <form id="bookingForm">
+
+                    <div class="form-group">
+                        <label>Full Name<input id="name"></label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email<input id="email" type="email"></label>
+                    </div>
+
+                    <div class="form-group">
+                        
+                        <label for="doctor">Select Doctor</label>
+
+                        <select id="doctor" required>
+                            <option value='0'>Doctors</option>
+                            <option value="Dr. Ali">Dr. Ali</option>
+                            <option value="Dr. Ayesha">Dr. Ayesha</option>
+                            <option value="Dr. Ahmed">Dr. Ahmed</option>
+                            <option value="Dr. Rehan">Dr. Rehan</option>
+                            <option value="Dr. Sara">Dr. Sara</option>
+                            <option value="Dr. Salman">Dr. Salman</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date<input id="date" type="date" required></label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Time<input id="time" type="time" required></label>
+                    </div>
+
+                    <button class="confirmBtn" type="submit">Confirm Appointment</button>
+
+                </form>
+            </div>
         </section>
 
     </main>
