@@ -32,3 +32,17 @@
     // Logo_Icons/icons/sect1Svgs/location.svg
 
 }
+
+
+
+
+
+
+
+
+
+
+const treatment = document.getElementById('treatment');
+const starOfLife = document.getElementById('starOfLife');
+const heartRate = document.getElementById('heartRate');
+const stethoscope = document.getElementById('stethoscope');
