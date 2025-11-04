@@ -68,6 +68,19 @@ const login = async (mail, pass) => {
 
 }
 
+// All Inputs______________________________________
+const inputs = document.querySelectorAll('input');
+
+{// Stop the default behavior of <form>____________________________________
+
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        check()
+        inputs.forEach(inputs => inputs.blur())
+    })
+}
+
 
 // Inputs_______________________________________________
 const email = document.getElementById('email');
@@ -78,6 +91,11 @@ const mailErr = document.querySelector('.emailError');
 const passErr = document.querySelector('.passError');
 
 function check() {
+
+    //     console.log(
+    //         email.value 
+    // ,password.value
+    //     );
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -113,6 +131,6 @@ function check() {
 const inputArr = [email, password];
 inputArr.forEach(inputs => {
     inputs.addEventListener('keypress', event => {
-        event.key === 'Enter' ? register() : null;
+        event.key === 'Enter' ? login() : null;
     })
 })
