@@ -151,16 +151,17 @@ main {
 
 
 
-/* About Section Start's___________________________________________________________ */
+/* About Section 1 Start's___________________________________________________________ */
 
 .about {
+    padding: 20px 40px;
+    margin-block: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     box-shadow: 0px 5px 10px grey;
     border-radius: 20px;
-    padding: 20px 40px;
 }
 
 .aboutHeading {
@@ -171,13 +172,67 @@ main {
     font-size: large;
 }
 
-/* About Section End's___________________________________________________________ */
+
+/* About Section 1 End's___________________________________________________________ */
 
 
 
 
 
 
+
+/* About Section 2 Start's___________________________________________________________ */
+
+
+.aboutCardsContainer {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.abtCrd {
+    min-height: 300px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+    border-inline: 1px solid dodgerblue;
+}
+
+.abtCrd1 {
+    border-left: none;
+}
+
+.abtCrd4 {
+    border-right: none;
+}
+
+.abtSvg svg {
+    width: 60px;
+    height: 60px;
+    fill: dodgerblue;
+    stroke: dodgerblue;
+}
+
+.abtCrdDiv2 {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+}
+
+/* .abtCrdH5 {} */
+
+.abtCrdMsg {
+    color: rgb(88, 88, 88);
+    font-size: 14px;
+}
+
+
+/* About Section 2 End's___________________________________________________________ */
 
 
 
@@ -280,6 +335,88 @@ main {
         font-size: 20px;
     }
 
+
+    /* About Section 2 Start's___________________________________________________________ */
+
+    .aboutCardsContainer {
+        justify-content: space-between;
+        align-items: start;
+        flex-wrap: wrap;
+    }
+
+    .abtCrd {
+        width: 350px;
+        border: none;
+    }
+
+}
+
+@media screen and (max-width: 786px) {
+
+    /* About Section 2 Start's___________________________________________________________ */
+
+    .aboutCardsContainer {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .abtCrd {
+        width: 300px;
+    }
+
+}
+
+@media screen and (max-width: 685px) {
+
+    /* About Section 2 Start's___________________________________________________________ */
+
+    .aboutCardsContainer {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .abtCrd {
+        width: 250px;
+    }
+
+}
+
+@media screen and (max-width: 585px) {
+
+    /* About Section 2 Start's___________________________________________________________ */
+
+    .aboutCardsContainer {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .abtCrd {
+        width: 100%;
+    }
+
+    .abtCrd2,
+    .abtCrd3 {
+        border-block: 1px solid dodgerblue;
+    }
+
+    .abtSvg svg {
+        width: 80px;
+        height: 80px;
+        fill: dodgerblue;
+        stroke: dodgerblue;
+    }
+
+    .abtCrdH5 {
+        font-size: 28px;
+    }
+
+    .abtCrdMsg {
+        color: rgb(88, 88, 88);
+        font-size: 18px;
+    }
 
 }
 
