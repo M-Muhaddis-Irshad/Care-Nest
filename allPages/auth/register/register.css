@@ -33,9 +33,11 @@ h1 {
 #name {
     background-image: url(../logo_icons/icons/user.svg);
 }
+
 #email {
     background-image: url(../logo_icons/icons/envelope.svg);
 }
+
 #password {
     background-image: url(../logo_icons/icons/lock.svg);
 }
@@ -103,4 +105,39 @@ input:focus {
 
 .Btn:focus {
     transform: scale(1);
+}
+
+
+@media screen and (max-width: 450px) {
+
+    main {
+        width: 500px;
+    }
+
+    .registerContainer {
+        width: 100%;
+    }
+
+    .registerContainer span {
+        width: 100%;
+    }
+
+    input {
+        width: 100%;
+    }
+
+    .Btn {
+        margin-top: -20px;
+    }
+
+}
+
+@media screen and (max-width: 380px) {
+
+    h1 {
+        font-size: 30px !important;
+        line-height: 2 !important;
+        margin-bottom: -8px !important;
+    }
+
 }

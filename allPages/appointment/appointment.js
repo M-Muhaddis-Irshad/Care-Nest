@@ -93,6 +93,5 @@ const doctor = document.getElementById('doctor');
 
 // Get Doctor________________________________________________
 const appoint = () => {
-
     console.log(doctor.value);
 }

@@ -74,6 +74,17 @@ const createUser = async (name, email, password) => {
 // All Inputs______________________________________
 const inputs = document.querySelectorAll('input');
 
+{// Stop the default behavior of <form>____________________________________
+
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        check()
+        inputs.forEach(inputs => inputs.blur())
+    })
+}
+
+
 // Inputs___________________________
 const userName = document.getElementById('name');
 const email = document.getElementById('email');
