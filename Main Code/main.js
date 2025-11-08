@@ -35,10 +35,6 @@
 
 }
 
-
-
-
-
 // CopyRight-Claim Date___________________________________
 
 const d = new Date();

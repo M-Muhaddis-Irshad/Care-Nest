@@ -1,7 +1,7 @@
 const supabaseApi = supabase.createClient('https://ubdfphgftdztmmfqoxmf.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InViZGZwaGdmdGR6dG1tZnFveG1mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxNzgwMDMsImV4cCI6MjA3Nzc1NDAwM30.SxvGOhgEIOTDXNajche0unZy4FfHFocaZVOW3lYh4H0')
 
-let userEmail = localStorage.getItem('userEmail');
-let userName = localStorage.getItem('userName');
+const userEmail = localStorage.getItem('userEmail');
+const userName = localStorage.getItem('userName');
 
 let stopFunctionFlg = true;
 

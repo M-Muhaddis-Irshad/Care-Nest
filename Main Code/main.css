@@ -539,6 +539,10 @@ ul {
         content: none;
     }
 
+    #loginBtn {
+        width: 100%;
+    }
+
     .lastLink {
         margin: 0;
     }
