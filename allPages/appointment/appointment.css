@@ -20,19 +20,19 @@
 
 
 
-.form-group {
+.formGroup {
   margin-bottom: 14px
 }
 
-.form-group label {
+.formGroup label {
   display: block;
   margin-bottom: 6px;
   font-weight: 600
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
   width: 100%;
   padding: 10px;
   border: 1px solid #e2e8f0;
