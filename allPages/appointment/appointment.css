@@ -65,3 +65,10 @@ select {
 .confirmBtn:focus {
     transform: scale(1);
 }
+
+
+/* Alerts/Errors Come From JavaScript____________________ */
+.alertText {
+  color: red;
+  text-decoration: underline;
+}

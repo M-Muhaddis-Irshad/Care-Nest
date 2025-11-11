@@ -116,7 +116,43 @@ let finalTime;
 const appoint = () => {
     const nameFromDom = document.getElementById('name').value;
     if (!nameFromDom.trim()) {
-        return alert("Input Can't be Empty")
+        Swal.fire({
+            title: `Please enter the <span class="alertText">Name</span>`,
+            icon: "error",
+            showConfirmButton: false,
+            timer: 1000
+        });
+        return
+    }
+
+    if (finalDoc === undefined) {
+        Swal.fire({
+            title: `Select the <span class="alertText">Doctor</span>`,
+            icon: "error",
+            showConfirmButton: false,
+            timer: 1500
+        });
+        return
+    }
+
+    if (finalDate === undefined) {
+        Swal.fire({
+            title: `Select the <span class="alertText">Date</span>`,
+            icon: "error",
+            showConfirmButton: false,
+            timer: 1500
+        });
+        return
+    }
+
+    if (finalTime === undefined) {
+        Swal.fire({
+            title: `Select the <span class="alertText">Time</span>`,
+            icon: "error",
+            showConfirmButton: false,
+            timer: 1500
+        });
+        return
     }
 
     const userName = (nameFromDom !== sessionName) ? nameFromDom : sessionName;
