@@ -97,12 +97,19 @@ const timing = document.getElementById('timing');
 
 // Drop Downs 1st Value Remove______________________________
 const Val1 = document.querySelectorAll('.val0');
+
 const optArr = [doctors, date, timing];
+
 optArr.forEach((optionsValue, i) => {
     if (optionsValue[i] !== 0) {
         Val1[i].style.display = "none";
     }
 })
+
+// Final values from user_________________________
+let finalDoc;
+let finalDate;
+let finalTime;
 
 
 // Real Work Start's____________________________________________________
@@ -111,16 +118,33 @@ const appoint = () => {
     if (!nameFromDom.trim()) {
         return alert("Input Can't be Empty")
     }
+
     const userName = (nameFromDom !== sessionName) ? nameFromDom : sessionName;
-    console.log(userName);
-    console.log(email.value);
+    console.log(`
+        Name = ${userName}
+        Email = ${email.value}
+        Doctor = ${finalDoc}
+        Date = ${finalDate}
+        Time = ${finalTime}
+        `);
+
+    Swal.fire({
+        title: "Appointment Booked Successfully",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1000
+    });
 }
+
+
 
 // Array with the same index no. which is show in options for find the exact (Date & Time)______
 const docNamesArr = [];
+const dateTimeDDownsArr = [date, timing];
 
 // Retrieve a session from supabase and set the values on DropDowns_____
 const retrieve = async () => {
+
     const { data, error } = await supabaseApi
         .from('DoctorsData')
         .select('Data')
@@ -132,47 +156,66 @@ const retrieve = async () => {
 
     let Data = data[0].Data;
 
-    // Run forEach loop on Data for set the names of doctors in the html <options> tag_____________ 
+    // Run loop on Data for set the names of doctors in the html <options> tag_____________ 
     Data.forEach((docs, index) => {
         const { Doctor: { Name } } = docs
         docNamesArr.push(Name);
         doctors.innerHTML += `<option value="${index}">${Name}</option>`;
-
-        // Disable the date & time drop downs before doctor selection_____________________
-        date.disabled = true;
-        timing.disabled = true;
     });
+
+    {    // Disable the date & time drop downs before doctor selection_____________________
+        dateTimeDDownsArr.forEach(DDowns => {
+            DDowns.disabled = true;
+            DDowns.style.cursor = 'not-allowed';
+        })
+    }
 
     doctors.addEventListener('change', event => {
 
-        // console.log(docNamesArr);
-        
-        // Reset the values of (Date & Time) drop downs on every Name change____________________
-        const dateTimeDDowns = [date, timing];
-        dateTimeDDowns.forEach(dDowns => dDowns.options.length = 0)
-        const selectedDoctor = event.target.value
+        {// Reset the values of (Date & Time) drop downs on every Name change____________________
+            dateTimeDDownsArr.forEach(dDowns => {
+                dDowns.options.length = 1
+                dDowns.style.cursor = 'pointer';
+            });
+        };
+        const selectedDoctorIndex = event.target.value;
 
-        const { Doctor: { Days, Timings } } = Data[selectedDoctor]
+
+        const { Doctor: { Days, Timings } } = Data[selectedDoctorIndex];
+
+        finalDoc = docNamesArr[selectedDoctorIndex];
 
         console.log(`
-            Name = ${docNamesArr[selectedDoctor]}
-            Days = ${Days}
-            Timings = ${Timings}
+                Name = ${finalDoc}
+                Days = ${Days}
+                Timings = ${Timings}
             `);
 
 
         date.disabled = false;
         timing.disabled = false;
 
-        Days.forEach(days => {
-            date.innerHTML += `<option value="${days}">${days}</option>`
-        })
+        {//Set values in (Date & Time) options after getting the Doctor Name
+            Days.forEach(days => {
+                date.innerHTML += `<option value="${days}">${days}</option>`
+            })
 
-        Timings.forEach(timings => {
-            timing.innerHTML += `<option value="${timings}">${timings}</option>`
-        })
+            Timings.forEach(timings => {
+                timing.innerHTML += `<option value="${timings}">${timings}</option>`
+            })
+        }
 
-    })
+    });
+
+    date.addEventListener('change', event => {
+        finalDate = event.target.value;
+        console.log(finalDate);
+    });
+
+    timing.addEventListener('change', event => {
+        finalTime = event.target.value;
+        console.log(finalTime);
+    });
 
 }
 

@@ -9,7 +9,7 @@
 }
 
 
-.form-container {
+.formContainer {
   background: white;
   padding: 28px;
   border-radius: 10px;
@@ -39,7 +39,9 @@
   border-radius: 6px
 }
 
-
+select {
+  cursor: pointer;
+}
 
 .confirmBtn {
     font-size: large;
