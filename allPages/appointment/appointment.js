@@ -3,7 +3,7 @@ const supabaseApi = supabase.createClient('https://ubdfphgftdztmmfqoxmf.supabase
 const userEmail = localStorage.getItem('userEmail');
 const sessionName = localStorage.getItem('userName');
 
-let stopFunctionFlg = true;
+let stopFunctionFlg = true;mohid12@gmail.com
 
 // LogOut Query/Function____________________________
 const logOutUser = async () => {
@@ -98,9 +98,9 @@ const timing = document.getElementById('timing');
 // Drop Downs 1st Value Remove______________________________
 const Val1 = document.querySelectorAll('.val0');
 
-const optArr = [doctors, date, timing];
+const dropDownsArray = [doctors, date, timing];
 
-optArr.forEach((optionsValue, i) => {
+dropDownsArray.forEach((optionsValue, i) => {
     if (optionsValue[i] !== 0) {
         Val1[i].style.display = "none";
     }
@@ -111,9 +111,9 @@ let finalDoc;
 let finalDate;
 let finalTime;
 
+// Function for booking the appointment Start's____________________________________________________
 
-// Real Work Start's____________________________________________________
-const appoint = () => {
+const appoint = async () => {
     const nameFromDom = document.getElementById('name').value;
     if (!nameFromDom.trim()) {
         Swal.fire({
@@ -125,7 +125,7 @@ const appoint = () => {
         return
     }
 
-    if (finalDoc === undefined) {
+    if (finalDoc === undefined || !finalDoc) {
         Swal.fire({
             title: `Select the <span class="alertText">Doctor</span>`,
             icon: "error",
@@ -135,7 +135,7 @@ const appoint = () => {
         return
     }
 
-    if (finalDate === undefined) {
+    if (finalDate === undefined || !finalDate) {
         Swal.fire({
             title: `Select the <span class="alertText">Date</span>`,
             icon: "error",
@@ -145,7 +145,7 @@ const appoint = () => {
         return
     }
 
-    if (finalTime === undefined) {
+    if (finalTime === undefined || !finalTime) {
         Swal.fire({
             title: `Select the <span class="alertText">Time</span>`,
             icon: "error",
@@ -164,14 +164,34 @@ const appoint = () => {
         Time = ${finalTime}
         `);
 
+    const { error } = await supabaseApi
+        .from('Appointments')
+        .insert({ Name: userName, Email: email.value, Doctor: finalDoc, Date: finalDate, Time: finalTime })
+
+    if (error) {
+        Swal.fire({
+            title: error.message,
+            icon: "error",
+            showConfirmButton: false,
+            timer: 1500
+        });
+        return
+    }
+
+
     Swal.fire({
         title: "Appointment Booked Successfully",
         icon: "success",
         showConfirmButton: false,
         timer: 1000
     });
+    setTimeout(() => {
+        window.location.href = '../bookings/myBookings.html';
+    }, 1000);
+
 }
 
+// Function for booking the appointment End's____________________________________________________
 
 
 // Array with the same index no. which is show in options for find the exact (Date & Time)______
@@ -195,7 +215,7 @@ const retrieve = async () => {
     // Run loop on Data for set the names of doctors in the html <options> tag_____________ 
     Data.forEach((docs, index) => {
         const { Doctor: { Name } } = docs
-        docNamesArr.push(Name);
+        docNamesArr.push(Name[0]);
         doctors.innerHTML += `<option value="${index}">${Name}</option>`;
     });
 
@@ -210,23 +230,23 @@ const retrieve = async () => {
 
         {// Reset the values of (Date & Time) drop downs on every Name change____________________
             dateTimeDDownsArr.forEach(dDowns => {
+                // Reset values from DOM_____________________________
                 dDowns.options.length = 1
                 dDowns.style.cursor = 'pointer';
+
+                // Reset values from JS variables_____________________________
+                finalDoc = "";
+                finalDate = "";
+                finalTime = "";
             });
         };
+
         const selectedDoctorIndex = event.target.value;
 
 
         const { Doctor: { Days, Timings } } = Data[selectedDoctorIndex];
 
         finalDoc = docNamesArr[selectedDoctorIndex];
-
-        console.log(`
-                Name = ${finalDoc}
-                Days = ${Days}
-                Timings = ${Timings}
-            `);
-
 
         date.disabled = false;
         timing.disabled = false;
