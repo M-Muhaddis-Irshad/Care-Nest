@@ -3,7 +3,7 @@ const supabaseApi = supabase.createClient('https://ubdfphgftdztmmfqoxmf.supabase
 const userEmail = localStorage.getItem('userEmail');
 const sessionName = localStorage.getItem('userName');
 
-let stopFunctionFlg = true;mohid12@gmail.com
+let stopFunctionFlg = true;
 
 // LogOut Query/Function____________________________
 const logOutUser = async () => {
@@ -71,6 +71,9 @@ isUserLoggedIn()
 
 
 
+
+
+
 {// Stop the default behavior of <form>____________________________________
     const form = document.querySelector('form');
     form.addEventListener('submit', (event) => {
@@ -78,6 +81,10 @@ isUserLoggedIn()
         appoint()
     })
 }
+
+
+
+
 
 
 
@@ -90,15 +97,19 @@ const email = document.getElementById('email');
 email.value = userEmail;
 email.disabled = true;
 
+
+// Date from user______________________________________
+const date = document.getElementById('date');
+
 // Drop Downs_________________________________________
 const doctors = document.getElementById('doctors');
-const date = document.getElementById('date');
+const day = document.getElementById('day');
 const timing = document.getElementById('timing');
 
 // Drop Downs 1st Value Remove______________________________
 const Val1 = document.querySelectorAll('.val0');
 
-const dropDownsArray = [doctors, date, timing];
+const dropDownsArray = [doctors, day, timing];
 
 dropDownsArray.forEach((optionsValue, i) => {
     if (optionsValue[i] !== 0) {
@@ -106,15 +117,52 @@ dropDownsArray.forEach((optionsValue, i) => {
     }
 })
 
+
+
+
+
+
+
+
+
+
 // Final values from user_________________________
 let finalDoc;
-let finalDate;
+let finalDay;
 let finalTime;
 
-// Function for booking the appointment Start's____________________________________________________
 
+// Save the selected Doctor Name & Days in a global variables for use in other functions__________________________________
+let selectedDoctorIndex = null;
+let selectedDoctorDaysArr = [];
+
+
+// Function for booking the appointment Start's____________________________________________________
 const appoint = async () => {
     const nameFromDom = document.getElementById('name').value;
+
+    // _________________________________________
+    const userDate = new Date(date.value);
+    const todayDate = new Date();
+    const maxDate = new Date();
+
+    const slctdDay = userDate.getDate();
+    const month = userDate.getMonth();
+    const year = userDate.getFullYear();
+
+    const selectedDate = `${slctdDay}/${month}/${year}`;
+
+    maxDate.setDate(todayDate.getDate() + 40);
+
+    // Array of Days______________________________
+    const daysArr = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+    const selectedDayIndex = userDate.getDay();
+    const selectedDayName = daysArr[selectedDayIndex];
+    console.log(selectedDayName)
+
+    // Conditions Start's_______________________________________________
+
     if (!nameFromDom.trim()) {
         Swal.fire({
             title: `Please enter the <span class="alertText">Name</span>`,
@@ -135,9 +183,28 @@ const appoint = async () => {
         return
     }
 
-    if (finalDate === undefined || !finalDate) {
+    if (!date.value.trim()) {
         Swal.fire({
             title: `Select the <span class="alertText">Date</span>`,
+            icon: "error",
+            showConfirmButton: false,
+            timer: 1500
+        });
+        return
+    }
+    else if (userDate < todayDate || userDate > maxDate) {
+        Swal.fire({
+            title: `Please select the date between next <span class="alertText">40 Days</span>`,
+            icon: "error",
+            showConfirmButton: false,
+            timer: 1500
+        });
+        return
+    }
+
+    if (finalDay === undefined || !finalDay) {
+        Swal.fire({
+            title: `Select the <span class="alertText">Day</span>`,
             icon: "error",
             showConfirmButton: false,
             timer: 1500
@@ -155,18 +222,22 @@ const appoint = async () => {
         return
     }
 
+    // Conditions End's_______________________________________________
+    
     const userName = (nameFromDom !== sessionName) ? nameFromDom : sessionName;
-    console.log(`
-        Name = ${userName}
-        Email = ${email.value}
-        Doctor = ${finalDoc}
-        Date = ${finalDate}
-        Time = ${finalTime}
-        `);
+
+    // console.log(`
+    //     Name = ${userName}
+    //     Email = ${email.value}
+    //     Doctor = ${finalDoc}
+    //     Date = ${selectedDate}
+    //     Day = ${finalDay}
+    //     Time = ${finalTime}
+    //     `);
 
     const { error } = await supabaseApi
         .from('Appointments')
-        .insert({ Name: userName, Email: email.value, Doctor: finalDoc, Date: finalDate, Time: finalTime })
+        .insert({ Name: userName, Email: email.value, Doctor: finalDoc, Date: selectedDate, Day: finalDay, Time: finalTime })
 
     if (error) {
         Swal.fire({
@@ -185,18 +256,20 @@ const appoint = async () => {
         showConfirmButton: false,
         timer: 1000
     });
-    setTimeout(() => {
-        window.location.href = '../bookings/myBookings.html';
-    }, 1000);
+    // setTimeout(() => {
+    //     window.location.href = '../bookings/myBookings.html';
+    // }, 1000);
 
 }
 
 // Function for booking the appointment End's____________________________________________________
 
 
-// Array with the same index no. which is show in options for find the exact (Date & Time)______
+
+
+// Array with the same index no. which is show in options for find the exact (Day & Time)______
 const docNamesArr = [];
-const dateTimeDDownsArr = [date, timing];
+const dateTimeDDownsArr = [day, timing];
 
 // Retrieve a session from supabase and set the values on DropDowns_____
 const retrieve = async () => {
@@ -212,36 +285,44 @@ const retrieve = async () => {
 
     let Data = data[0].Data;
 
-    // Run loop on Data for set the names of doctors in the html <options> tag_____________ 
+    // Run loop on Data for set the names of doctors in the html <options> tag & push into the Docs names Array__________________ 
     Data.forEach((docs, index) => {
         const { Doctor: { Name } } = docs
         docNamesArr.push(Name[0]);
         doctors.innerHTML += `<option value="${index}">${Name}</option>`;
     });
 
-    {    // Disable the date & time drop downs before doctor selection_____________________
+    {    // Disable the date, day & time drop downs before doctor selection_____________________
+        
+        date.disabled = true;
+        date.style.cursor = 'not-allowed';
+
         dateTimeDDownsArr.forEach(DDowns => {
             DDowns.disabled = true;
             DDowns.style.cursor = 'not-allowed';
         })
+    
     }
 
     doctors.addEventListener('change', event => {
 
-        {// Reset the values of (Date & Time) drop downs on every Name change____________________
+        {// Reset the values of (Date, Days & Time) on every Name change____________________
             dateTimeDDownsArr.forEach(dDowns => {
                 // Reset values from DOM_____________________________
                 dDowns.options.length = 1
                 dDowns.style.cursor = 'pointer';
 
-                // Reset values from JS variables_____________________________
-                finalDoc = "";
-                finalDate = "";
-                finalTime = "";
             });
+            
+            // Reset values from JS variables_____________________________
+            finalDoc = "";
+            date.value = "";
+            date.style.cursor = 'pointer';
+            finalDay = "";
+            finalTime = "";
         };
 
-        const selectedDoctorIndex = event.target.value;
+        selectedDoctorIndex = event.target.value;
 
 
         const { Doctor: { Days, Timings } } = Data[selectedDoctorIndex];
@@ -249,11 +330,12 @@ const retrieve = async () => {
         finalDoc = docNamesArr[selectedDoctorIndex];
 
         date.disabled = false;
+        day.disabled = false;
         timing.disabled = false;
 
         {//Set values in (Date & Time) options after getting the Doctor Name
             Days.forEach(days => {
-                date.innerHTML += `<option value="${days}">${days}</option>`
+                day.innerHTML += `<option value="${days}">${days}</option>`
             })
 
             Timings.forEach(timings => {
@@ -263,14 +345,14 @@ const retrieve = async () => {
 
     });
 
-    date.addEventListener('change', event => {
-        finalDate = event.target.value;
-        console.log(finalDate);
+    day.addEventListener('change', event => {
+        finalDay = event.target.value;
+        // console.log(finalDay);
     });
 
     timing.addEventListener('change', event => {
         finalTime = event.target.value;
-        console.log(finalTime);
+        // console.log(finalTime);
     });
 
 }
