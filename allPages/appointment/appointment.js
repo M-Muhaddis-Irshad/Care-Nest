@@ -103,13 +103,13 @@ const date = document.getElementById('date');
 
 // Drop Downs_________________________________________
 const doctors = document.getElementById('doctors');
-const day = document.getElementById('day');
 const timing = document.getElementById('timing');
+const domDaysContnr = document.getElementById('daysContainer');
 
 // Drop Downs 1st Value Remove______________________________
 const Val1 = document.querySelectorAll('.val0');
 
-const dropDownsArray = [doctors, day, timing];
+const dropDownsArray = [doctors, timing];
 
 dropDownsArray.forEach((optionsValue, i) => {
     if (optionsValue[i] !== 0) {
@@ -128,7 +128,6 @@ dropDownsArray.forEach((optionsValue, i) => {
 
 // Final values from user_________________________
 let finalDoc;
-let finalDay;
 let finalTime;
 
 
@@ -141,7 +140,7 @@ let selectedDoctorDaysArr = [];
 const appoint = async () => {
     const nameFromDom = document.getElementById('name').value;
 
-    // _________________________________________
+    // Create the date object for for date selection conditions__________________________________
     const userDate = new Date(date.value);
     const todayDate = new Date();
     const maxDate = new Date();
@@ -159,7 +158,10 @@ const appoint = async () => {
 
     const selectedDayIndex = userDate.getDay();
     const selectedDayName = daysArr[selectedDayIndex];
-    console.log(selectedDayName)
+    // console.log(selectedDayName)
+
+    // console.log(selectedDoctorDaysArr);
+    const dayConditionVariable = selectedDoctorDaysArr.includes(selectedDayName, selectedDoctorDaysArr);
 
     // Conditions Start's_______________________________________________
 
@@ -202,16 +204,6 @@ const appoint = async () => {
         return
     }
 
-    if (finalDay === undefined || !finalDay) {
-        Swal.fire({
-            title: `Select the <span class="alertText">Day</span>`,
-            icon: "error",
-            showConfirmButton: false,
-            timer: 1500
-        });
-        return
-    }
-
     if (finalTime === undefined || !finalTime) {
         Swal.fire({
             title: `Select the <span class="alertText">Time</span>`,
@@ -222,22 +214,35 @@ const appoint = async () => {
         return
     }
 
+    if (dayConditionVariable === false) {
+        Swal.fire({
+            title: `Please select another <span class="alertText">Date</span>`,
+            html: `${finalDoc} is not available on <span class="alertText">${selectedDayName}</span>`,
+            icon: "error",
+            showConfirmButton: false,
+            timer: 2000
+        });
+        return
+    }
+
+
     // Conditions End's_______________________________________________
-    
+
     const userName = (nameFromDom !== sessionName) ? nameFromDom : sessionName;
 
-    // console.log(`
-    //     Name = ${userName}
-    //     Email = ${email.value}
-    //     Doctor = ${finalDoc}
-    //     Date = ${selectedDate}
-    //     Day = ${finalDay}
-    //     Time = ${finalTime}
-    //     `);
+    console.log(`
+        Name = ${userName}
+        Email = ${email.value}
+        Doctor = ${finalDoc}
+        Date = ${selectedDate}
+        Day = ${selectedDayName}
+        Time = ${finalTime}
+        `
+    );
 
     const { error } = await supabaseApi
         .from('Appointments')
-        .insert({ Name: userName, Email: email.value, Doctor: finalDoc, Date: selectedDate, Day: finalDay, Time: finalTime })
+        .insert({ Name: userName, Email: email.value, Doctor: finalDoc, Date: selectedDate, Day: selectedDayName, Time: finalTime })
 
     if (error) {
         Swal.fire({
@@ -269,7 +274,6 @@ const appoint = async () => {
 
 // Array with the same index no. which is show in options for find the exact (Day & Time)______
 const docNamesArr = [];
-const dateTimeDDownsArr = [day, timing];
 
 // Retrieve a session from supabase and set the values on DropDowns_____
 const retrieve = async () => {
@@ -292,50 +296,58 @@ const retrieve = async () => {
         doctors.innerHTML += `<option value="${index}">${Name}</option>`;
     });
 
-    {    // Disable the date, day & time drop downs before doctor selection_____________________
-        
+    {    // Disable the date, day & time elements before doctor selection_____________________
+
         date.disabled = true;
         date.style.cursor = 'not-allowed';
 
-        dateTimeDDownsArr.forEach(DDowns => {
-            DDowns.disabled = true;
-            DDowns.style.cursor = 'not-allowed';
-        })
-    
+        timing.disabled = true;
+        timing.style.cursor = 'not-allowed';
     }
 
     doctors.addEventListener('change', event => {
 
-        {// Reset the values of (Date, Days & Time) on every Name change____________________
-            dateTimeDDownsArr.forEach(dDowns => {
-                // Reset values from DOM_____________________________
-                dDowns.options.length = 1
-                dDowns.style.cursor = 'pointer';
+        {// Reset the values of (Date, Days & Time) on every Doctor change____________________
 
-            });
-            
+            // Reset values from DOM_____________________________
+            timing.options.length = 1
+            timing.style.cursor = 'pointer';
+
             // Reset values from JS variables_____________________________
             finalDoc = "";
             date.value = "";
             date.style.cursor = 'pointer';
-            finalDay = "";
+            domDaysContnr.innerHTML = "";
             finalTime = "";
         };
 
+        // Here is the doctor value  that is come from doctors dropDown from (index 0 to 5)____________
         selectedDoctorIndex = event.target.value;
-
 
         const { Doctor: { Days, Timings } } = Data[selectedDoctorIndex];
 
         finalDoc = docNamesArr[selectedDoctorIndex];
 
-        date.disabled = false;
-        day.disabled = false;
-        timing.disabled = false;
+        {// Channge the heading from DOM on doctor selection__________________
+            document.getElementById("availableDaysHeading").innerHTML = `<span class="docNameOnAvlblDaysHeading">${finalDoc}</span> is available on these days`
+        }
+
+        {// Enable the Date, Day & Time dropdowns on doctor selection________________
+            date.disabled = false;
+            timing.disabled = false;
+        }
 
         {//Set values in (Date & Time) options after getting the Doctor Name
             Days.forEach(days => {
-                day.innerHTML += `<option value="${days}">${days}</option>`
+                // day.innerHTML += `<option value="${days}">${days}</option>`
+                selectedDoctorDaysArr.push(days)
+                domDaysContnr.innerHTML += `
+                    <div class="avlblDays">
+                        ${days}
+                    </div>
+
+                `
+                console.log('Days push from this line')
             })
 
             Timings.forEach(timings => {
@@ -343,11 +355,6 @@ const retrieve = async () => {
             })
         }
 
-    });
-
-    day.addEventListener('change', event => {
-        finalDay = event.target.value;
-        // console.log(finalDay);
     });
 
     timing.addEventListener('change', event => {

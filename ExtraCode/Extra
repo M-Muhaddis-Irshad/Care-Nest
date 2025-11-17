@@ -82,3 +82,26 @@ const doctorsData = [
 
 
     // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        day.addEventListener('change', event => {
+        finalDay = event.target.value;
+        // console.log(finalDay);
+    });
+

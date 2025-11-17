@@ -1,5 +1,5 @@
 .onAppointmentPage::before {
-    transform: scaleX(1) !important; 
+  transform: scaleX(1) !important;
 }
 
 .booking-section {
@@ -31,39 +31,70 @@
 }
 
 .formGroup input,
-.formGroup select,
-.formGroup textarea {
+.formGroup select {
   width: 100%;
   padding: 10px;
   border: 1px solid #e2e8f0;
   border-radius: 6px
 }
 
+/* Selected doctor's available days start's_____________________ */
+.daysDiv {
+  min-height: 68px;
+}
+
+.avlblDaysCntnr {
+  display: flex;
+  gap: 10px;
+}
+
+.avlblDays {
+  color: white;
+  font-weight: 600;
+  font-size: medium;
+  padding: 5px 10px;
+  background-color: dodgerblue;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.avlblDays:hover {
+  background-color: rgb(0, 99, 197);
+}
+
+.docNameOnAvlblDaysHeading {
+  color: dodgerblue;
+  font-size: larger;
+  font-weight: 500;
+}
+/* Selected doctor's available days end's_____________________ */
+
 select {
   cursor: pointer;
 }
 
 .confirmBtn {
-    font-size: large;
-    font-weight: 500;
-    background-color: transparent;
-    padding: 4px 15px 15px 15px;
-    padding-bottom: 4px;
-    border: 1px solid dodgerblue;
-    border-radius: 20px;
-    transition: all 0.2s;
+  font-size: large;
+  font-weight: 500;
+  background-color: transparent;
+  padding: 4px 15px 15px 15px;
+  padding-bottom: 4px;
+  border: 1px solid dodgerblue;
+  border-radius: 20px;
+  transition: all 0.2s;
 }
 
 
 .confirmBtn:hover {
-    color: white;
-    background-color: dodgerblue;
-    border-color: transparent;
-    transform: scale(1.1);
+  color: white;
+  background-color: dodgerblue;
+  border-color: transparent;
+  transform: scale(1.1);
 }
 
 .confirmBtn:focus {
-    transform: scale(1);
+  transform: scale(1);
 }
 
 

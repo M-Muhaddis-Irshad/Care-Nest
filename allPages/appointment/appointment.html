@@ -89,6 +89,7 @@
     <main>
 
         <section class="booking-section">
+
             <div class="formContainer">
 
                 <h2>Book Your Appointment</h2>
@@ -116,18 +117,22 @@
 
                         <label for="date">Select Date</label>
                         <input type="date" id="date">
-                        <!-- <select id="date" required>
-                            <option value='0' class="val0">Dates</option>
-                        </select> -->
 
                     </div>
 
-                    <div class="formGroup">
+                    <div class="formGroup daysDiv">
 
-                        <label for="day">Select Day</label>
-                        <select id="day" required>
-                            <option value='0' class="val0">Days</option>
-                        </select>
+                        <h5 id="availableDaysHeading">
+                            Select a doctor to load schedule and available days
+                        </h5>
+
+                        <div class="avlblDaysCntnr" id="daysContainer">
+
+                            <!-- <div class="avlblDays">
+                                Sunday
+                            </div> -->
+
+                        </div>
 
                     </div>
 
@@ -142,7 +147,9 @@
                     <button class="confirmBtn" id="confimrBtn" type="submit">Confirm Appointment</button>
 
                 </form>
+
             </div>
+
         </section>
 
     </main>
