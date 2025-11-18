@@ -230,15 +230,15 @@ const appoint = async () => {
 
     const userName = (nameFromDom !== sessionName) ? nameFromDom : sessionName;
 
-    console.log(`
-        Name = ${userName}
-        Email = ${email.value}
-        Doctor = ${finalDoc}
-        Date = ${selectedDate}
-        Day = ${selectedDayName}
-        Time = ${finalTime}
-        `
-    );
+    // console.log(`
+    //     Name = ${userName}
+    //     Email = ${email.value}
+    //     Doctor = ${finalDoc}
+    //     Date = ${selectedDate}
+    //     Day = ${selectedDayName}
+    //     Time = ${finalTime}
+    //     `
+    // );
 
     const { error } = await supabaseApi
         .from('Appointments')
@@ -261,9 +261,9 @@ const appoint = async () => {
         showConfirmButton: false,
         timer: 1000
     });
-    // setTimeout(() => {
-    //     window.location.href = '../bookings/myBookings.html';
-    // }, 1000);
+    setTimeout(() => {
+        window.location.href = '../bookings/myBookings.html';
+    }, 1000);
 
 }
 
@@ -282,10 +282,10 @@ const retrieve = async () => {
         .from('DoctorsData')
         .select('Data')
 
-    if (error) {
-        console.log(error.message)
-        return
-    }
+    // if (error) {
+    //     console.log(error.message)
+    //     return
+    // }
 
     let Data = data[0].Data;
 
@@ -339,7 +339,6 @@ const retrieve = async () => {
 
         {//Set values in (Date & Time) options after getting the Doctor Name
             Days.forEach(days => {
-                // day.innerHTML += `<option value="${days}">${days}</option>`
                 selectedDoctorDaysArr.push(days)
                 domDaysContnr.innerHTML += `
                     <div class="avlblDays">
@@ -347,7 +346,6 @@ const retrieve = async () => {
                     </div>
 
                 `
-                console.log('Days push from this line')
             })
 
             Timings.forEach(timings => {
@@ -359,7 +357,6 @@ const retrieve = async () => {
 
     timing.addEventListener('change', event => {
         finalTime = event.target.value;
-        // console.log(finalTime);
     });
 
 }

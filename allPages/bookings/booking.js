@@ -68,3 +68,39 @@ const isUserLoggedIn = async () => {
 }
 
 isUserLoggedIn()
+
+
+
+const retrieve = async () => {
+
+    const { data, error } = await supabaseApi
+        .from('Appointments')
+        .select('*')
+        .eq('Email', userEmail)
+
+    if (error) {
+        console.log(error)
+        return
+    }
+
+    data.forEach(element => {
+        // Get User's Booked Appointments according to user Email________________________
+        console.log(element)
+        // const { Email } = element;
+        // console.log(Email)
+    });
+
+    console.log(data)
+
+}
+
+retrieve()
+
+// Use subscribe query for realtime changes_________________________
+supabaseApi
+    .channel('room1')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'Appointments' }, payload => {
+        // console.log('Change received!', payload)
+        retrieve()
+    })
+    .subscribe()
