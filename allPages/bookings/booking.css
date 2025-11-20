@@ -21,18 +21,23 @@ table,
 th,
 td {
     text-align: center;
-    padding: 12px;
+    padding: 8px 16px;
     margin: auto;
     border: 1px solid lightslategray !important;
 }
 
 th {
     color: rgb(0, 73, 146);
-    background-color: skyblue;
     font-size: larger;
+    background-color: skyblue;
+    border: none !important;
 }
 
-.delete{
+td {
+    font-size: large;
+}
+
+.delete {
     color: white;
     background-color: red;
 }
@@ -40,10 +45,17 @@ th {
 td button {
     color: white;
     background-color: dodgerblue;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+td button:hover {
+    background-color: rgb(0, 103, 206);
 }
 
 /* @Media Queries Start's_________________________________ */
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 540px) {
 
     th,
     td {
@@ -51,15 +63,24 @@ td button {
     }
 }
 
-@media screen and (max-width: 385px) {
+@media screen and (max-width: 470px) {
 
+    th,
+    td {
+        /* font-size: x-small !important; */
+        padding: 8px;
+    }
+
+    main {
+        padding: 20px 5px !important;
+    }
 }
 
 @media screen and (max-width: 385px) {
 
     th,
     td {
-        font-size: small !important;
+        font-size: x-small !important;
         padding: 8px;
     }
 

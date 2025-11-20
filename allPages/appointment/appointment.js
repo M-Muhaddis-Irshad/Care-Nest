@@ -47,7 +47,7 @@ const isUserLoggedIn = async () => {
             timer: 1000
         });
         setTimeout(() => {
-            window.location.href = '/allPages/auth/login/login.html';
+            window.location.href = '../auth/login/login.html';
         }, 1000);
         localStorage.removeItem('userEmail');
         localStorage.removeItem('userName');

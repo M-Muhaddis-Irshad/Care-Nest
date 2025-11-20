@@ -50,7 +50,7 @@ const isUserLoggedIn = async () => {
             timer: 1000
         });
         setTimeout(() => {
-            window.location.href = '/allPages/auth/login/login.html';
+            window.location.href = '../auth/login/login.html';
         }, 1000);
         localStorage.removeItem('userEmail');
         localStorage.removeItem('userName');
@@ -70,6 +70,25 @@ const isUserLoggedIn = async () => {
 
 isUserLoggedIn()
 
+const deleteAppointment = async (id) => {
+    const { data, error } = await supabaseApi
+        .from('Appointments')
+        .delete()
+        .eq('id', id)
+        .select('*')
+
+    if (error) {
+        return alert(error.message)
+    }
+
+    Swal.fire({
+        title: "Appointment Canceled",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1000
+    });
+
+}
 
 // DOM Elements__________________________________________________
 
@@ -77,6 +96,8 @@ const mainTag = document.getElementById('bodyContent');
 const tBody = document.getElementById('tableContent');
 
 const retrieve = async () => {
+
+    tBody.innerHTML = ''
 
     const { data, error } = await supabaseApi
         .from('Appointments')
@@ -88,7 +109,7 @@ const retrieve = async () => {
         return
     }
 
-    console.log(data)
+    // console.log(data)
 
     if (data.length === 0) {
         mainTag.innerHTML = `
@@ -99,19 +120,11 @@ const retrieve = async () => {
         return
     }
 
-    // Date
-    // Day
-    // Doctor
-    // Email
-    // Name
-    // Time
-    // created_at
-    // id
-
     data.forEach(bookings => {
         // Get User's Booked Appointments according to User's Email________________________
-        console.log(bookings)
-        const { Name: PName, Doctor, Date, Time } = bookings
+
+        // console.log(bookings)
+        const { Name: PName, Doctor, Date, Time, id } = bookings
         tBody.innerHTML += `
                 <tr>
                     <td>${PName}</td>
@@ -119,15 +132,23 @@ const retrieve = async () => {
                     <td>${Date}</td>
                     <td>${Time}</td>
                     <td>
-                        <button>
+                        <button id="dltBooking${id}">
                             Cancel
                         </button>
                     </td>
                 </tr>
 
         `
-        // const { Email } = bookings;
-        // console.log(Email)
+        setTimeout(() => {
+
+            const cancelBtn = document.getElementById(`dltBooking${id}`)
+            cancelBtn.addEventListener('click', async e => {
+                // console.log(e.target.id)
+                deleteAppointment(id)
+            })
+        }, 0);
+
+
     });
 
 
