@@ -1,3 +1,69 @@
+/* Highlight the (My Bookings) heading on Navbar when user is on the (My Bookings) page______________________ */
 .onBookAppointmentPage::before {
-    transform: scaleX(1) !important; 
+    transform: scaleX(1) !important;
+}
+
+main {
+    padding: 20px !important;
+}
+
+.noAppointmentsMsg {
+    text-align: center;
+    color: dodgerblue;
+    padding: 20px;
+    padding-bottom: 30px;
+    border-radius: 10px;
+    filter: drop-shadow(1px 2px 1px cyan);
+    box-shadow: 0px 2px 5px;
+}
+
+table,
+th,
+td {
+    text-align: center;
+    padding: 12px;
+    margin: auto;
+    border: 1px solid lightslategray !important;
+}
+
+th {
+    color: rgb(0, 73, 146);
+    background-color: skyblue;
+    font-size: larger;
+}
+
+.delete{
+    color: white;
+    background-color: red;
+}
+
+td button {
+    color: white;
+    background-color: dodgerblue;
+}
+
+/* @Media Queries Start's_________________________________ */
+@media screen and (max-width: 500px) {
+
+    th,
+    td {
+        font-size: small !important;
+    }
+}
+
+@media screen and (max-width: 385px) {
+
+}
+
+@media screen and (max-width: 385px) {
+
+    th,
+    td {
+        font-size: small !important;
+        padding: 8px;
+    }
+
+    main {
+        padding: 20px 10px !important;
+    }
 }

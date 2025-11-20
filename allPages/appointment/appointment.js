@@ -160,8 +160,8 @@ const appoint = async () => {
     const selectedDayName = daysArr[selectedDayIndex];
     // console.log(selectedDayName)
 
-    // console.log(selectedDoctorDaysArr);
     const dayConditionVariable = selectedDoctorDaysArr.includes(selectedDayName, selectedDoctorDaysArr);
+    // console.log(dayConditionVariable);
 
     // Conditions Start's_______________________________________________
 
@@ -282,10 +282,10 @@ const retrieve = async () => {
         .from('DoctorsData')
         .select('Data')
 
-    // if (error) {
-    //     console.log(error.message)
-    //     return
-    // }
+    if (error) {
+        console.log(error.message)
+        return
+    }
 
     let Data = data[0].Data;
 
@@ -317,6 +317,7 @@ const retrieve = async () => {
             finalDoc = "";
             date.value = "";
             date.style.cursor = 'pointer';
+            selectedDoctorDaysArr = [];
             domDaysContnr.innerHTML = "";
             finalTime = "";
         };
@@ -339,12 +340,12 @@ const retrieve = async () => {
 
         {//Set values in (Date & Time) options after getting the Doctor Name
             Days.forEach(days => {
-                selectedDoctorDaysArr.push(days)
+                selectedDoctorDaysArr.push(days);
+
                 domDaysContnr.innerHTML += `
                     <div class="avlblDays">
                         ${days}
                     </div>
-
                 `
             })
 

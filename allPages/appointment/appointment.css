@@ -1,3 +1,4 @@
+/* Highlight the Appoint heading on Navbar when user is on the appointment page______________________ */
 .onAppointmentPage::before {
   transform: scaleX(1) !important;
 }
@@ -45,6 +46,8 @@
 
 .avlblDaysCntnr {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 10px;
 }
 

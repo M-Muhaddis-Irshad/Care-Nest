@@ -60,6 +60,7 @@ const isUserLoggedIn = async () => {
     // After checking that session is not empty create a signout button______________________________
     loginBtn.innerHTML = `<a href="#" class="navLinks lastLink" id="signout">Signout <svg class="portal"></svg></a>`
     const signoutBtn = document.getElementById('signout');
+
     signoutBtn.addEventListener('click', async e => {
         e.preventDefault()
         await logOutUser()
@@ -70,6 +71,10 @@ const isUserLoggedIn = async () => {
 isUserLoggedIn()
 
 
+// DOM Elements__________________________________________________
+
+const mainTag = document.getElementById('bodyContent');
+const tBody = document.getElementById('tableContent');
 
 const retrieve = async () => {
 
@@ -83,14 +88,48 @@ const retrieve = async () => {
         return
     }
 
-    data.forEach(element => {
-        // Get User's Booked Appointments according to user Email________________________
-        console.log(element)
-        // const { Email } = element;
+    console.log(data)
+
+    if (data.length === 0) {
+        mainTag.innerHTML = `
+        <h1 class="noAppointmentsMsg">
+            You haven't booked any appointments yet
+        </h1>
+        `
+        return
+    }
+
+    // Date
+    // Day
+    // Doctor
+    // Email
+    // Name
+    // Time
+    // created_at
+    // id
+
+    data.forEach(bookings => {
+        // Get User's Booked Appointments according to User's Email________________________
+        console.log(bookings)
+        const { Name: PName, Doctor, Date, Time } = bookings
+        tBody.innerHTML += `
+                <tr>
+                    <td>${PName}</td>
+                    <td>${Doctor}</td>
+                    <td>${Date}</td>
+                    <td>${Time}</td>
+                    <td>
+                        <button>
+                            Cancel
+                        </button>
+                    </td>
+                </tr>
+
+        `
+        // const { Email } = bookings;
         // console.log(Email)
     });
 
-    console.log(data)
 
 }
 
