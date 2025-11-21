@@ -140,7 +140,6 @@ const retrieve = async () => {
 
         `
         setTimeout(() => {
-
             const cancelBtn = document.getElementById(`dltBooking${id}`)
             cancelBtn.addEventListener('click', async e => {
                 // console.log(e.target.id)
@@ -160,7 +159,6 @@ retrieve()
 supabaseApi
     .channel('room1')
     .on('postgres_changes', { event: '*', schema: 'public', table: 'Appointments' }, payload => {
-        // console.log('Change received!', payload)
         retrieve()
     })
     .subscribe()

@@ -70,10 +70,6 @@ isUserLoggedIn()
 
 
 
-
-
-
-
 {// Stop the default behavior of <form>____________________________________
     const form = document.querySelector('form');
     form.addEventListener('submit', (event) => {
@@ -82,10 +78,48 @@ isUserLoggedIn()
     })
 }
 
+// Section of Appointment Booking form from DOM____________________________
+const formSection = document.getElementById('formSection');
 
+const retrieveBookings = async () => {
 
+    const { data, error } = await supabaseApi
+        .from('Appointments')
+        .select('*')
+        .eq('Email', userEmail)
 
+    if (error) {
+        console.log(error)
+        return
+    }
 
+    if (data.length === 5) {
+        formSection.classList.add('disabled_section');
+        // Add class on parent element <main> cuz (cursor = not-allowed) isn't working with (pointer-events = none)_________________
+        formSection.parentElement.classList.add('disableMain');
+        formSection.parentElement.title = `Maximum of 5 appointments allowed per user`;
+        Swal.fire({
+            title: `Limit Reached`,
+            text: 'Maximum of 5 appointments allowed per user',
+            icon: "warning",
+        });
+        return
+    }
+}
+
+retrieveBookings()
+
+formSection.parentElement.addEventListener('click', event => {
+    retrieveBookings()
+})
+
+// Use subscribe query for realtime changes_________________________
+supabaseApi
+    .channel('room1')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'Appointments' }, payload => {
+        retrieveBookings()
+    })
+    .subscribe()
 
 
 // Set Name Input value dynamically_____________________________________________
@@ -118,14 +152,6 @@ dropDownsArray.forEach((optionsValue, i) => {
 })
 
 
-
-
-
-
-
-
-
-
 // Final values from user_________________________
 let finalDoc;
 let finalTime;
@@ -138,6 +164,7 @@ let selectedDoctorDaysArr = [];
 
 // Function for booking the appointment Start's____________________________________________________
 const appoint = async () => {
+
     const nameFromDom = document.getElementById('name').value;
 
     // Create the date object for for date selection conditions__________________________________
@@ -364,109 +391,111 @@ const retrieve = async () => {
 
 retrieve()
 
-const doctorsData = [
-    {
-        "Doctor": {
-            "Name": ["Dr. Ali"],
-            "Days": [
-                "Monoday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday"
-            ],
-            "Timings": ["8:00AM - 1:00PM", "1:00PM - 5:30PM"]
-        }
-    },
-    {
-        "Doctor": {
-            "Name": ["Dr. Ayesha"],
-            "Days": [
-                "Monoday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday"
-            ],
-            "Timings": ["8:00AM - 1:00PM", "1:00PM - 5:30PM"]
-        }
-    },
-    {
-        "Doctor": {
-            "Name": ["Dr. Ahmed"],
-            "Days": [
-                "Monoday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday"
-            ],
-            "Timings": ["8:00AM - 1:00PM", "1:00PM - 5:30PM"]
-        }
-    },
-    {
-        "Doctor": {
-            "Name": ["Dr. Rehan"],
-            "Days": [
-                "Monoday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday"
-            ],
-            "Timings": ["8:00AM - 1:00PM", "1:00PM - 5:30PM"]
-        }
-    },
-    {
-        "Doctor": {
-            "Name": ["Dr. Sara"],
-            "Days": [
-                "Saturday",
-                "Sunday"
-            ],
-            "Timings": ["9:30AM - 1:00PM", "1:00PM - 5:30PM"]
-        }
-    },
-    {
-        "Doctor": {
-            "Name": ["Dr. Salman"],
-            "Days": [
-                "Saturday",
-                "Sunday"
-            ],
-            "Timings": ["9:30AM - 1:00PM", "1:00PM - 5:30PM"]
-        }
-    }
-]
+// { // Doctors Data with (insert) & (delete) queries______________________
+//     const doctorsData = [
+//         {
+//             "Doctor": {
+//                 "Name": ["Dr. Ali"],
+//                 "Days": [
+//                     "Monoday",
+//                     "Tuesday",
+//                     "Wednesday",
+//                     "Thursday",
+//                     "Friday"
+//                 ],
+//                 "Timings": ["8:00AM - 1:00PM", "1:00PM - 5:30PM"]
+//             }
+//         },
+//         {
+//             "Doctor": {
+//                 "Name": ["Dr. Ayesha"],
+//                 "Days": [
+//                     "Monoday",
+//                     "Tuesday",
+//                     "Wednesday",
+//                     "Thursday",
+//                     "Friday"
+//                 ],
+//                 "Timings": ["8:00AM - 1:00PM", "1:00PM - 5:30PM"]
+//             }
+//         },
+//         {
+//             "Doctor": {
+//                 "Name": ["Dr. Ahmed"],
+//                 "Days": [
+//                     "Monoday",
+//                     "Tuesday",
+//                     "Wednesday",
+//                     "Thursday",
+//                     "Friday"
+//                 ],
+//                 "Timings": ["8:00AM - 1:00PM", "1:00PM - 5:30PM"]
+//             }
+//         },
+//         {
+//             "Doctor": {
+//                 "Name": ["Dr. Rehan"],
+//                 "Days": [
+//                     "Monoday",
+//                     "Tuesday",
+//                     "Wednesday",
+//                     "Thursday",
+//                     "Friday"
+//                 ],
+//                 "Timings": ["8:00AM - 1:00PM", "1:00PM - 5:30PM"]
+//             }
+//         },
+//         {
+//             "Doctor": {
+//                 "Name": ["Dr. Sara"],
+//                 "Days": [
+//                     "Saturday",
+//                     "Sunday"
+//                 ],
+//                 "Timings": ["9:30AM - 1:00PM", "1:00PM - 5:30PM"]
+//             }
+//         },
+//         {
+//             "Doctor": {
+//                 "Name": ["Dr. Salman"],
+//                 "Days": [
+//                     "Saturday",
+//                     "Sunday"
+//                 ],
+//                 "Timings": ["9:30AM - 1:00PM", "1:00PM - 5:30PM"]
+//             }
+//         }
+//     ]
 
-{// Supabase Insert & Delete Query_______________________________
+//     {// Supabase Insert & Delete Query_______________________________
 
-    const insert = async () => {
-        const { error } = await supabaseApi
-            .from('DoctorsData')
-            .insert(
-                {
-                    id: 1,
-                    Data: doctorsData
-                }
-            )
+//         const insert = async () => {
+//             const { error } = await supabaseApi
+//                 .from('DoctorsData')
+//                 .insert(
+//                     {
+//                         id: 1,
+//                         Data: doctorsData
+//                     }
+//                 )
 
-        if (error) {
-            console.log(error.message)
-            return
-        }
-    }
-    // insert()
+//             if (error) {
+//                 console.log(error.message)
+//                 return
+//             }
+//         }
+//         // insert()
 
 
-    const Delete = async () => {
-        const response = await supabaseApi
-            .from('DoctorsData')
-            .delete()
-            .eq('id', 1)
-        console.log(response);
+//         const Delete = async () => {
+//             const response = await supabaseApi
+//                 .from('DoctorsData')
+//                 .delete()
+//                 .eq('id', 1)
+//             console.log(response);
 
-    }
+//         }
 
-    // Delete()
-}
+//         // Delete()
+//     }
+// }
