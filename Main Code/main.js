@@ -10,6 +10,7 @@
     {
         window.addEventListener("scroll", () => {
             const scroll = this.scrollY;
+            // Use ternary operators for check the condition__________________________
             (scroll === 0) ? navContainer.classList.remove('scrlStart') : navContainer.classList.add('scrlStart')
         });
     }
